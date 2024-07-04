@@ -1,6 +1,7 @@
 const express=require("express")
 const path=require('path')
 const app=express()
+const fs=require("fs")
 
 app.use(express.json())
 app.use(express.urlencoded({ extended:true}));
@@ -9,8 +10,13 @@ app.set('view engine','ejs')
 
 app.get('/',(req,res)=>{
     // res.send("Hello, I am Twinkal's backend");
-    res.render("index")//ejs file
+    fs.readdir(`./files`,(err, files)=>{
+        console.log(files)
+        res.render("index",{files:files})//ejs file and sending data object to ejs
 })
+
+    })
+    
 //"/author/:home" is route  :home is dynamic part
 app.get("/author/:username",(req,res)=>{
     res.send(`Welcome, ${req.params.username}`);
